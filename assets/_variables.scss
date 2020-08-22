@@ -1,0 +1,45 @@
+// Base unit
+$unit: 8px;
+
+// Spacing
+$spacing1: 1 * $unit;
+$spacing2: 2 * $unit;
+$spacing3: 3 * $unit;
+$spacing4: 4 * $unit;
+$spacing5: 5 * $unit;
+$spacing6: 6 * $unit;
+$spacing7: 7 * $unit;
+$spacing8: 8 * $unit;
+$spacing9: 9 * $unit;
+$spacing10: 10 * $unit;
+$spacing11: 11 * $unit;
+$spacing12: 12 * $unit;
+$spacing13: 13 * $unit;
+$spacing14: 14 * $unit;
+$spacing15: 15 * $unit;
+$spacing16: 16 * $unit;
+$spacing17: 17 * $unit;
+$spacing18: 18 * $unit;
+$spacing19: 19 * $unit;
+$spacing20: 20 * $unit;
+
+// Font weight
+$font-regular: 400;
+$font-medium: 500;
+$font-bold: 700;
+
+// Rounded
+$rounded-none: 0px;
+$rounded-sm: 9px;
+$rounded-md: 18px;
+$rounded-lg: 36px;
+$rounded-xl: 72px;
+
+// Transition
+$transition-unit: 0.2s;
+$transition-bg-theme: 0s ease background-color, $transition-unit ease transform, $transition-unit ease left, $transition-unit ease right, $transition-unit ease box-shadow, $transition-unit ease max-width, $transition-unit ease width, $transition-unit ease width;
+
+// 3d Text
+$LIGHTING_FLOOR: 1;
+$LIGHTING_CEIL: 2;
+$LIGHTING_FLAT: 3;

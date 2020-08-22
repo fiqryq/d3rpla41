@@ -1,0 +1,81 @@
+/* Custom shadows */
+@mixin shadow-none {
+  box-shadow: none !important
+}
+
+@mixin shadow-sm {
+  .theme--dark & {
+    box-shadow: 0 2px 43px -4px rgba(0,0,0,0.1) !important
+  }
+  .theme--light & {
+    box-shadow: 0 2px 43px -4px rgba(0,0,0,0.1) !important
+  }
+}
+
+@mixin shadow-md {
+  .theme--dark & {
+    box-shadow: 0 2px 43px -4px rgba(0,0,0,0.1) !important
+  }
+  .theme--light & {
+    box-shadow: 0 2px 43px -4px rgba(0,0,0,0.1) !important
+  }
+}
+
+@mixin shadow-lg {
+  .theme--dark & {
+    box-shadow: 0 2px 43px -4px rgba(0,0,0,0.1) !important
+  }
+  .theme--light & {
+    box-shadow: 0 2px 43px -4px rgba(0,0,0,0.1) !important
+  }
+}
+
+@mixin shadow-xl {
+  .theme--dark & {
+    box-shadow: 0 2px 43px -4px rgba(0,0,0,0.1) !important
+  }
+  .theme--light & {
+    box-shadow: 0 2px 43px -4px rgba(0,0,0,0.1) !important
+  }
+}
+
+
+@mixin text3d(
+  $primary, 
+  $depth: 5, 
+  $shadowsteps: 5, 
+  $shadowincrementer: 3px, 
+  $shadowopacity: .5, 
+  $primaryshadowcolour: #000, 
+  $lighting: $LIGHTING_CEIL) {
+  $predefinedShadows: (
+    0 0 5px rgba($primaryshadowcolour, .05), 
+    0 -1px 3px rgba($primaryshadowcolour, .2), 
+    0 3px 5px rgba($primaryshadowcolour, .2));
+  $value: ();
+  @for $i from 1 through $depth {
+    $num: $i + px;
+    $hueadjust: $i;
+    @if($lighting == $LIGHTING_FLOOR) {
+      $hueadjust: ($i * 2 - $depth - 5) * 1%;
+    } @else if($lighting == $LIGHTING_CEIL) {
+      $hueadjust: -($i*2 + $depth - 10) * 1%;
+    } @else if($lighting == $LIGHTING_FLAT) {
+      $hueadjust: -$depth * 1%;
+    }
+    $colour: adjust-color($primary, $lightness: $hueadjust);
+    $theShadow: 0 $num 0 $colour;
+    $value: append($value, $theShadow, comma);
+  }
+  
+  @for $i from 1 through $shadowsteps {
+    @if($i >= length($predefinedShadows)) {
+      $dist: $i * $shadowincrementer;
+      $value: append($value, 0 $dist $dist rgba($primaryshadowcolour, $shadowopacity));
+    } @else {
+      $value: append($value, nth($predefinedShadows, $i));
+    }
+  }
+  
+  text-shadow: $value;
+}

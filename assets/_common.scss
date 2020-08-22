@@ -1,0 +1,30 @@
+// Common Styling
+a {
+  text-decoration: none
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+.full-height {
+  height: 100vh;
+}
+#particles canvas{
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  height: 100vh !important;
+  transform: scale(1.2);
+  // z-index: 0 !important;
+}
+
+.card-message {
+  border-radius: $rounded-md !important;
+  overflow: hidden;
+}
+
+
+$duration: 0.5s ease-out;
+.stack-item {
+  transition: transform $duration;
+}

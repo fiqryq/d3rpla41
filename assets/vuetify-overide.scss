@@ -1,0 +1,21 @@
+// Vuetify class overide
+.v-app-bar {
+  // transition: $transition-bg-theme !important;
+  border-radius: 0 0 $rounded-lg 0 !important;
+  @include shadow-lg;
+}
+
+.v-navigation-drawer {
+  border-radius: 0 0 $rounded-lg 0;
+  @include shadow-lg;
+  
+  .v-navigation-drawer__border {
+    display: none !important;
+  }
+}
+
+.v-list {
+  * {
+    transition: $transition-bg-theme !important;
+  }
+}
