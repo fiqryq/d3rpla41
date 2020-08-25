@@ -28,3 +28,11 @@ $duration: 0.5s ease-out;
 .stack-item {
   transition: transform $duration;
 }
+
+.lottie-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}

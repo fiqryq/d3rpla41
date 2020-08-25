@@ -1,6 +1,11 @@
 <template>
   <div>
     <v-fade-transition>
+      <div v-if="!isLoadedLottie" class="lottie-cover">
+        <Lottie height="100%" :options="lottieOptions" @loaded="loadedLottie" />
+      </div>
+    </v-fade-transition>
+    <v-fade-transition>
       <div v-show="isLoaded">
         <v-app-bar
           :value="appBar"
@@ -34,10 +39,10 @@
                 <v-spacer v-if="!$vuetify.breakpoint.mobile" />
                 <div v-else class="mx-1" />
               </template>
-              <template v-else>
+              <!-- <template v-else>
                 <v-toolbar-title>🎉</v-toolbar-title>
                 <v-spacer />
-              </template>
+              </template> -->
 
               <v-btn icon @click="toggleSearch">
                 <v-icon>{{ toolbarSearch ? 'mdi-magnify-close' : 'mdi-magnify' }}</v-icon>
@@ -98,10 +103,13 @@
 <script>
 import { paginate } from '@/utils'
 import MessageCard from '@/components/message'
+import Lottie from '@/components/lottie'
+import animationData from '@/static/lottie/6902-exploding-ribbon-and-confetti.json'
 
 export default {
   components: {
-    MessageCard
+    MessageCard,
+    Lottie
   },
   async asyncData ({ isDev, route, store, env, params, query, req, res, redirect, error }) {
     await store.dispatch('getMessages')
@@ -115,15 +123,16 @@ export default {
       messages: paginate(messages, page, 10),
       dataLoaded,
       page,
-      size
+      size,
+      lottieOptions: { animationData }
     }
   },
   data: () => ({
     appBar: false,
     toolbarSearch: false,
-    StackIsLoaded: false,
     isLoaded: false,
     isLoadMore: false,
+    isLoadedLottie: false,
     search: '',
     filtered: false
   }),
@@ -141,13 +150,21 @@ export default {
     }
   },
   mounted () {
-    this.isLoaded = true
-    this.StackIsLoaded = true
-    setTimeout(() => {
-      this.appBar = true
-    }, 550)
+    this.init()
   },
   methods: {
+    init () {
+      setTimeout(() => {
+        this.isLoaded = true
+        this.updatedLayout()
+      }, 700)
+      setTimeout(() => {
+        this.appBar = true
+      }, 1200)
+    },
+    loadedLottie () {
+      this.isLoadedLottie = true
+    },
     filterData () {
       if (this.search) {
         const search = this.search.toLowerCase().trim()
