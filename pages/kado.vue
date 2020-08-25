@@ -58,7 +58,7 @@
                 Yahh ada error nih.. kado gagal dibuka, silahkan coba lagi nanti ya hehe
               </v-alert>
             </v-flex>
-            <v-flex v-else-if="filtered && messages.length === 0" xs12 class="pa-3">
+            <v-flex v-else-if="filtered && filteredData.length === 0" xs12 class="pa-3">
               <v-alert class="card-message" type="warning">
                 Tidak ada data yang cocok
               </v-alert>
@@ -70,7 +70,7 @@
               :gutter-width="5"
               :gutter-height="5"
             >
-              <StackItem v-for="(item, index) in messages" :key="index" :class="$vuetify.breakpoint.mobile ? '' : 'stack-item'">
+              <StackItem v-for="(item, index) in filtered ? filteredData : messages" :key="index" :class="$vuetify.breakpoint.mobile ? '' : 'stack-item'">
                 <MessageCard
                   :kesan="item.kesan || ''"
                   :foto="item.foto || null"
@@ -119,7 +119,6 @@ export default {
     const size = 10
     return {
       allData: messages,
-      storeMessages: paginate(messages, page, 10),
       messages: paginate(messages, page, 10),
       dataLoaded,
       page,
@@ -134,7 +133,8 @@ export default {
     isLoadMore: false,
     isLoadedLottie: false,
     search: '',
-    filtered: false
+    filtered: false,
+    filteredData: []
   }),
   computed: {
     backBtn () {
@@ -175,15 +175,14 @@ export default {
 
         if (this.search === '') {
           this.filtered = false
-          this.messages = this.storeMessages
+          this.filteredData = []
         } else {
           this.filtered = true
-          this.messages = filtered
+          this.filteredData = filtered
           window.scrollTo(0, 0)
         }
       } else {
         this.filtered = false
-        this.messages = this.storeMessages
       }
       this.updatedLayout()
     },
@@ -203,7 +202,6 @@ export default {
         if (next.length > 1) {
           next.forEach((el) => {
             this.messages.push(el)
-            this.storeMessages.push(el)
           })
           $state.loaded()
         } else {
