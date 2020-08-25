@@ -107,7 +107,7 @@
       v-model="player"
       width="800"
     >
-      <v-card v-if="player" height="450" width="100%">
+      <v-card v-if="player" height="400" width="100%">
         <v-layout justify-center align-center wrap style="height: 100%; width: 100%">
           <v-progress-circular style="position: absolute; z-index: 0;" class="ma-auto" indeterminate color="primary" />
           <iframe

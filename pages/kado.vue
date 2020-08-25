@@ -9,7 +9,6 @@
           color="primary"
           dark
           flat
-          height="75"
         >
           <v-container grid-list-xs class="pa-0 pa-md-2">
             <v-layout align-center row wrap>
@@ -112,8 +111,8 @@ export default {
     const size = 10
     return {
       allData: messages,
-      storeMessages: paginate(messages, page, 15),
-      messages: paginate(messages, page, 15),
+      storeMessages: paginate(messages, page, 10),
+      messages: paginate(messages, page, 10),
       dataLoaded,
       page,
       size

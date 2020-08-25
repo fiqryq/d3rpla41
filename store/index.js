@@ -33,7 +33,7 @@ export const actions = {
       }
       const res = await this.$api.get('', { params })
       const data = res.data.rows
-      const finalData = data.map((v, index) => ({ ...v, index }))
+      const finalData = data.map((v, index) => ({ ...v, index })).reverse()
       commit('MESSAGES', finalData || [])
     } catch (err) {
       commit('MESSAGES', [])
