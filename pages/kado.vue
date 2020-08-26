@@ -39,10 +39,14 @@
                 <v-spacer v-if="!$vuetify.breakpoint.mobile" />
                 <div v-else class="mx-1" />
               </template>
-              <!-- <template v-else>
-                <v-toolbar-title>🎉</v-toolbar-title>
+              <template v-else>
+                <v-btn :class="specialContentDone ? 'gift-opened' : 'gift-animation'" fab icon @click="toSpecialContent">
+                  <v-icon class="gift-icon">
+                    mdi-gift
+                  </v-icon>
+                </v-btn>
                 <v-spacer />
-              </template> -->
+              </template>
 
               <v-btn icon @click="toggleSearch">
                 <v-icon>{{ toolbarSearch ? 'mdi-magnify-close' : 'mdi-magnify' }}</v-icon>
@@ -97,11 +101,71 @@
         </v-container>
       </div>
     </v-fade-transition>
+
+    <v-dialog
+      v-model="specialContent"
+      width="800"
+    >
+      <v-card v-if="specialContent" height="400" width="100%">
+        <v-layout justify-center align-center wrap style="height: 100%; width: 100%">
+          <v-progress-circular style="position: absolute; z-index: 0;" class="ma-auto" indeterminate color="primary" />
+          <iframe
+            style="z-index: 1; position: relative"
+            :src="getSpecialContent"
+            width="100%"
+            height="100%"
+            frameborder="0"
+            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+          />
+        </v-layout>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
+<style lang="scss">
+@mixin gift-animation {
+  position: absolute !important;
+  animation-name: gift;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+}
+
+.gift {
+  &-opened:hover {
+    .gift-icon {
+      @include gift-animation();
+    }
+  }
+  &-animation {
+    .gift-icon {
+      @include gift-animation();
+    }
+  }
+}
+
+@keyframes gift {
+  0% {
+    top: -10px;
+  }
+  35% {
+    top: -16px;
+  }
+  45% {
+    top: -10px;
+  }
+  55% {
+    top: -12px;
+  }
+  100% {
+    top: -10px;
+  }
+}
+</style>
+
 <script>
-import { paginate } from '@/utils'
+import { paginate, getUrlFile } from '@/utils'
 import MessageCard from '@/components/message'
 import Lottie from '@/components/lottie'
 import animationData from '@/static/lottie/6902-exploding-ribbon-and-confetti.json'
@@ -134,7 +198,10 @@ export default {
     isLoadedLottie: false,
     search: '',
     filtered: false,
-    filteredData: []
+    filteredData: [],
+    specialContent: false,
+    specialContentDone: false,
+    specialContentUrl: 'https://drive.google.com/open?id=1LkEztiM6wu72RFDjRpuYybv_3y0XZzDH'
   }),
   computed: {
     backBtn () {
@@ -146,6 +213,13 @@ export default {
         }
       } else {
         return true
+      }
+    },
+    getSpecialContent () {
+      if (this.specialContentUrl) {
+        return getUrlFile(this.specialContentUrl, 'embed')
+      } else {
+        return null
       }
     }
   },
@@ -222,6 +296,10 @@ export default {
     },
     toggleSearch () {
       this.toolbarSearch = !this.toolbarSearch
+    },
+    toSpecialContent () {
+      this.specialContentDone = true
+      this.specialContent = !this.specialContent
     }
   }
 }
